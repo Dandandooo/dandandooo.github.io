@@ -1,43 +1,48 @@
-# Astro Starter Kit: Minimal
+# Daniel Philipov — Portfolio
 
-```sh
-bun create astro@latest -- --template minimal
+Personal portfolio website for Daniel Philipov, a Junior at UIUC studying Computer Science and Physics. Built with [Astro](https://astro.build) and deployed via GitHub Pages.
+
+**Live site:** [dandandooo.github.io](https://dandandooo.github.io)
+
+## Pages
+
+- **Home** — Intro, bio, and tech stack
+- **Projects** — Hackathon wins, coursework, and personal projects
+- **Research** — Academic research work
+- **Photography** — Photo gallery
+- **Swimming** — Competitive swimming
+- **Resume** — Embedded resume
+
+## Tech Stack
+
+- [Astro](https://astro.build) — Static site framework
+- [astro-icon](https://github.com/natemoo-re/astro-icon) + [Catppuccin icons](https://github.com/catppuccin/icons) — Icon system
+- [Bun](https://bun.sh) — Package manager & runtime
+- GitHub Actions — CI/CD deploy pipeline
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
+├── public/               # Static assets (favicons, PDFs, etc.)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── assets/           # Images and other imported assets
+│   ├── components/       # Reusable Astro components (Navbar, InfoCard, etc.)
+│   ├── data/             # Content data (projects.jsonc, research entries, etc.)
+│   ├── layouts/          # Page layout wrappers
+│   ├── pages/            # One file per route
+│   └── styles/           # Global CSS
+├── astro.config.mjs
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+All commands are run from the project root:
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun run dev`             | Starts local dev server at `localhost:4321`      |
-| `bun run build`           | Build your production site to `./dist/`          |
-| `bun run preview`         | Preview your build locally, before deploying     |
-| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Command            | Action                                      |
+| :----------------- | :------------------------------------------ |
+| `bun install`      | Install dependencies                        |
+| `bun run dev`      | Start local dev server at `localhost:4321`  |
+| `bun run build`    | Build production site to `./dist/`          |
+| `bun run preview`  | Preview production build locally            |
