@@ -2,7 +2,7 @@
 
 Personal portfolio website for Daniel Philipov, a Junior at UIUC studying Computer Science and Physics. Built with [Astro](https://astro.build) and deployed via GitHub Pages.
 
-**Live site:** [dandandooo.github.io](https://dandandooo.github.io)
+**Live site:** [daniel.philipov.org](https://daniel.philipov.org)
 
 ## Pages
 
