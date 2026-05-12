@@ -34,9 +34,9 @@ import photo from "@/assets/images/profile.jpeg";
 import { Image } from "astro:assets";
 ---
 
-<html lang="en">
+<html lang="en" class="home-page">
 	<BaseHead title="Daniel Philipov" favicon="/favicon-r.svg" />
-	<body>
+	<body class="home-page">
 		<Navbar current="home" />
 		<main>
 			<header>
@@ -279,6 +279,34 @@ import { Image } from "astro:assets";
 	}
 
 	@media (max-width: 840px) {
+		:global(html.home-page) {
+			height: auto;
+			min-height: 100%;
+			overflow-x: hidden !important;
+			overflow-y: auto !important;
+			overscroll-behavior-y: auto;
+		}
+
+		:global(body.home-page) {
+			padding-top: 0 !important;
+			height: auto !important;
+			min-height: 100vh;
+			min-height: 100svh;
+			overflow-x: hidden !important;
+			overflow-y: auto !important;
+			-webkit-overflow-scrolling: touch;
+			overscroll-behavior-y: auto;
+		}
+
+		main {
+			box-sizing: border-box;
+			padding-top: 5.25rem;
+			height: auto;
+			min-height: calc(100vh - 5.5rem);
+			min-height: calc(100svh - 5.5rem);
+			align-content: start;
+		}
+
 		.profile-grid {
 			grid-template-columns: 1fr;
 		}

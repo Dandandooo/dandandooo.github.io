@@ -60,6 +60,20 @@ const { current } = Astro.props;
   const toolbar = document.querySelector<HTMLElement>("[data-toolbar]");
 
   if (toolbar) {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    scrollToTop();
+    window.addEventListener("pageshow", scrollToTop, { once: true });
+    window.requestAnimationFrame(scrollToTop);
+
     const links = Array.from(
       toolbar.querySelectorAll<HTMLAnchorElement>(".tool-btn")
     );
@@ -92,9 +106,6 @@ const { current } = Astro.props;
     window.addEventListener("scroll", setScrolledState, { passive: true });
     document.addEventListener("scroll", setScrolledState, { passive: true });
     window.addEventListener("resize", setScrolledState);
-
-    // Sync after layout/restore so bar appears if page isn't at top.
-    window.requestAnimationFrame(setScrolledState);
 
     const isTypingTarget = (target: EventTarget | null) => {
       if (!(target instanceof HTMLElement)) return false;
@@ -293,8 +304,7 @@ const { current } = Astro.props;
     }
 
     .name-link {
-      position: relative;
-      left: auto;
+      display: none;
     }
   }
 </style>

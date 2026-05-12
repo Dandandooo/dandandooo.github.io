@@ -134,11 +134,15 @@ import { projects } from "@/data/projects.ts";
   @media (max-width: 640px) {
     .project-grid {
       grid-template-columns: 1fr;
-      gap: 0.55rem;
+      gap: 1rem;
     }
 
     .project-grid :global(.info-card) {
       grid-column: auto;
+      transform: none;
+    }
+
+    .project-grid :global(.info-card:hover) {
       transform: none;
     }
   }

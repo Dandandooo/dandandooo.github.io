@@ -351,8 +351,21 @@ const hasAward = Boolean(normalizedAward);
   }
 
   @media (max-width: 640px) {
+    .info-card {
+      transition: border-color 140ms ease;
+      will-change: auto;
+    }
+
+    .info-card:hover {
+      transform: none;
+    }
+
     :global(.project-grid .info-card) {
       grid-column: auto;
+      transform: none;
+    }
+
+    :global(.project-grid .info-card:hover) {
       transform: none;
     }
   }
