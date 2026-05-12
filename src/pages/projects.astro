@@ -33,14 +33,23 @@ import { projects } from "@/data/projects.ts";
 <style>
   :global(:root) {
     --page-bg-color: #060c09;
-    --page-background: linear-gradient(
+    --page-base-layer: linear-gradient(
         180deg,
         #0d1a13 0%,
         #0a1410 48%,
         #060c09 100%
-      ),
-      radial-gradient(100vw 60vh at 10% -10%, #2f8f6940, transparent 55%),
-      radial-gradient(100vw 60vh at 85% -20%, #4b9b7240, transparent 60%);
+      );
+    --page-glow-layer-start: radial-gradient(
+      100vw 60vh at 10% -10%,
+      #2f8f6940,
+      transparent 55%
+    );
+    --page-glow-layer-end: radial-gradient(
+      100vw 60vh at 85% -20%,
+      #4b9b7240,
+      transparent 60%
+    );
+    --dot-pattern-color: rgba(220, 252, 231, 0.28);
     color: #f8fafc;
   }
 

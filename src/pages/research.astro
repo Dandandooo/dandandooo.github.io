@@ -134,14 +134,23 @@ const papers = [
 <style>
   :global(:root) {
     --page-bg-color: #070a11;
-    --page-background: linear-gradient(
+    --page-base-layer: linear-gradient(
         180deg,
         #171025 0%,
         #110b1a 48%,
         #09070d 100%
-      ),
-      radial-gradient(100vw 60vh at 10% -10%, #8f6ad466, transparent 55%),
-      radial-gradient(100vw 60vh at 85% -20%, #b48be652, transparent 60%);
+      );
+    --page-glow-layer-start: radial-gradient(
+      100vw 60vh at 10% -10%,
+      #8f6ad466,
+      transparent 55%
+    );
+    --page-glow-layer-end: radial-gradient(
+      100vw 60vh at 85% -20%,
+      #b48be652,
+      transparent 60%
+    );
+    --dot-pattern-color: rgba(233, 213, 255, 0.28);
     color: #f8fafc;
   }
 

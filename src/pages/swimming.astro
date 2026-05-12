@@ -2,11 +2,16 @@
 import "../styles/background-lines.css";
 import "../styles/fonts.css";
 import Navbar from "@/components/Navbar.astro";
-import BaseHead from "@/components/BaseHead.astro";
 ---
 
 <html lang="en">
-  <BaseHead title="Daniel's Swimming" favicon="/favicon-b.svg" />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-b.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Daniel's Swimming</title>
+  </head>
   <body>
     <Navbar current="swimming" />
 
@@ -16,63 +21,74 @@ import BaseHead from "@/components/BaseHead.astro";
         <h1>Swimming</h1>
       </header>
     </main>
+    <style>
+      :global(:root) {
+        --page-bg-color: #02050e;
+        --page-base-layer: linear-gradient(
+            180deg,
+            #091c3c 0%,
+            #05122a 46%,
+            #02050e 100%
+          );
+        --page-glow-layer-start: radial-gradient(
+          100vw 60vh at 10% -10%,
+          #74a6d326,
+          transparent 55%
+        );
+        --page-glow-layer-end: radial-gradient(
+          100vw 60vh at 85% -20%,
+          #7fb8d81f,
+          transparent 60%
+        );
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        color: #f8fafc;
+      }
+
+      :global(body) {
+        margin: 0;
+        height: 100vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-y: none;
+        color: #f8fafc;
+        position: relative;
+        isolation: isolate;
+        font-family: "Lexend", "Segoe UI", sans-serif;
+      }
+
+      :global(:root) {
+        --accent-cyan: #38bdf8;
+        --accent-lime: #67e8f9;
+        --accent-amber: #60a5fa;
+        --accent-rose: #7dd3fc;
+        --accent-plum: #93c5fd;
+        --accent-orange: #0ea5e9;
+        --line-pattern-color: rgba(186, 228, 255, 0.16);
+        --dot-pattern-color: rgba(186, 228, 255, 0.28);
+      }
+
+      main {
+        width: min(1120px, 92vw);
+        margin: 1.25rem auto 2.5rem;
+      }
+
+      .kicker {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #93c5fd;
+        font-size: 0.75rem;
+      }
+
+      h1 {
+        margin: 0.15rem 0 1.2rem;
+        font-family: "Rajdhani", sans-serif;
+        letter-spacing: 0.04em;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+      }
+    </style>
   </body>
 </html>
-
-<style>
-  :global(:root) {
-    --page-bg-color: #02050e;
-    --page-background:
-      linear-gradient(180deg, #091c3c 0%, #05122a 46%, #02050e 100%),
-      radial-gradient(100vw 60vh at 10% -10%, #74a6d326, transparent 55%),
-      radial-gradient(100vw 60vh at 85% -20%, #7fb8d81f, transparent 60%);
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    color: #f8fafc;
-  }
-
-  :global(body) {
-    margin: 0;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
-    color: #f8fafc;
-    position: relative;
-    isolation: isolate;
-    font-family: "Lexend", "Segoe UI", sans-serif;
-  }
-
-  :global(:root) {
-    --accent-cyan: #38bdf8;
-    --accent-lime: #67e8f9;
-    --accent-amber: #60a5fa;
-    --accent-rose: #7dd3fc;
-    --accent-plum: #93c5fd;
-    --accent-orange: #0ea5e9;
-    --line-pattern-color: rgba(186, 228, 255, 0.16);
-  }
-
-  main {
-    width: min(1120px, 92vw);
-    margin: 1.25rem auto 2.5rem;
-  }
-
-  .kicker {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #93c5fd;
-    font-size: 0.75rem;
-  }
-
-  h1 {
-    margin: 0.15rem 0 1.2rem;
-    font-family: "Rajdhani", sans-serif;
-    letter-spacing: 0.04em;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-  }
-
-</style>

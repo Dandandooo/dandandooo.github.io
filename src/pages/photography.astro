@@ -3,7 +3,6 @@ import "../styles/background-lines.css";
 import "../styles/fonts.css";
 import Navbar from "@/components/Navbar.astro";
 import PhotoTile from "@/components/PhotoTile.astro";
-import BaseHead from "@/components/BaseHead.astro";
 
 type PhotoTileData = {
   title: string;
@@ -25,7 +24,7 @@ const photoTiles: PhotoTileData[] = [
     title: "Golden Hour Street",
     size: "full",
     image: snowbird,
-    location: "Snowbird Mountain Resort, UT"
+    location: "Snowbird Mountain Resort, UT",
   },
   { title: "Lake Reflection", size: "wide" },
   { title: "City Silhouette", size: "tall" },
@@ -38,7 +37,13 @@ const photoTiles: PhotoTileData[] = [
 ---
 
 <html lang="en">
-  <BaseHead title="Daniel's Photography" favicon="/favicon-p.svg" />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-p.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Daniel's Photography</title>
+  </head>
   <body>
     <Navbar current="photography" />
 
@@ -48,15 +53,17 @@ const photoTiles: PhotoTileData[] = [
         <h1>Photography</h1>
       </header>
       <section class="photo-grid" aria-label="Photography grid">
-        {photoTiles.map((tile, index) => (
-          <PhotoTile
-            title={tile.title}
-            size={tile.size}
-            index={index + 1}
-            image={tile.image}
-            imageAlt={tile.title}
-          />
-        ))}
+        {
+          photoTiles.map((tile, index) => (
+            <PhotoTile
+              title={tile.title}
+              size={tile.size}
+              index={index + 1}
+              image={tile.image}
+              imageAlt={tile.title}
+            />
+          ))
+        }
       </section>
     </main>
   </body>
@@ -65,10 +72,22 @@ const photoTiles: PhotoTileData[] = [
 <style>
   :global(:root) {
     --page-bg-color: #0c0806;
-    --page-background:
-      linear-gradient(180deg, #241812 0%, #31211a 46%, #15100c 100%),
-      radial-gradient(100vw 60vh at 10% -10%, #86634f40, transparent 55%),
-      radial-gradient(100vw 60vh at 85% -20%, #98705a38, transparent 60%);
+    --page-base-layer: linear-gradient(
+        180deg,
+        #241812 0%,
+        #31211a 46%,
+        #15100c 100%
+      );
+    --page-glow-layer-start: radial-gradient(
+      100vw 60vh at 10% -10%,
+      #86634f40,
+      transparent 55%
+    );
+    --page-glow-layer-end: radial-gradient(
+      100vw 60vh at 85% -20%,
+      #98705a38,
+      transparent 60%
+    );
     margin: 0;
     height: 100%;
     overflow: hidden;
@@ -96,6 +115,7 @@ const photoTiles: PhotoTileData[] = [
     --accent-plum: #7a5c49;
     --accent-orange: #bf9978;
     --line-pattern-color: rgba(227, 205, 180, 0.1);
+    --dot-pattern-color: rgba(227, 205, 180, 0.26);
   }
 
   main {

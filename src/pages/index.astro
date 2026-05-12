@@ -95,15 +95,24 @@ import { Image } from "astro:assets";
 <style>
 	:global(:root) {
 		--page-bg-color: #0f0404;
-		--page-background: linear-gradient(
+		--page-base-layer: linear-gradient(
 				180deg,
 				#350c0c 0%,
 				#220707 48%,
 				#0f0404 100%
-			),
-			radial-gradient(100vw 60vh at 10% -10%, #fb718550, transparent 55%),
-			radial-gradient(100vw 60vh at 85% -20%, #ef444440, transparent 60%);
+			);
+		--page-glow-layer-start: radial-gradient(
+			100vw 60vh at 10% -10%,
+			#fb718550,
+			transparent 55%
+		);
+		--page-glow-layer-end: radial-gradient(
+			100vw 60vh at 85% -20%,
+			#ef444440,
+			transparent 60%
+		);
 		--line-pattern-color: rgba(255, 235, 210, 0.16);
+		--dot-pattern-color: rgba(255, 235, 210, 0.3);
 		margin: 0;
 		height: 100%;
 		overflow: hidden;
