@@ -131,7 +131,7 @@ import { projects } from "@/data/projects.ts";
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 640px), (orientation: portrait) {
     .project-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
@@ -139,11 +139,11 @@ import { projects } from "@/data/projects.ts";
 
     .project-grid :global(.info-card) {
       grid-column: auto;
-      transform: none;
+      transform: none !important;
     }
 
     .project-grid :global(.info-card:hover) {
-      transform: none;
+      transform: none !important;
     }
   }
 </style>

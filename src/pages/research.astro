@@ -214,13 +214,13 @@ const papers = [
     transform: translateY(-4px) rotate(-0.1deg);
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 640px), (orientation: portrait) {
     .research-grid :global(.info-card) {
-      transform: none;
+      transform: none !important;
     }
 
     .research-grid :global(.info-card:hover) {
-      transform: none;
+      transform: none !important;
     }
   }
 </style>

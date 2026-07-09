@@ -11,6 +11,10 @@
   --dot-pattern-color: rgba(248, 250, 252, 0.26);
   --dot-pattern-size: 18px 18px;
   --dot-pattern-dot-size: 1.25px;
+  --dot-hover-x: 50vw;
+  --dot-hover-y: 50vh;
+  --dot-hover-opacity: 0;
+  --dot-hover-size: 120px;
   --line-pattern-layer: repeating-linear-gradient(
     135deg,
     var(--line-pattern-color) 0px,
@@ -63,5 +67,32 @@ body::before {
   background-size: var(--page-pattern-sizes);
   mix-blend-mode: soft-light;
   opacity: var(--page-pattern-opacity);
+  z-index: -1;
+}
+
+.dot-hover-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--dot-pattern-layer);
+  background-size: var(--dot-pattern-size);
+  filter: brightness(1.75) saturate(1.08);
+  mask-image: radial-gradient(
+    circle var(--dot-hover-size) at var(--dot-hover-x) var(--dot-hover-y),
+    rgb(0 0 0 / 0.72) 0%,
+    rgb(0 0 0 / 0.46) 34%,
+    rgb(0 0 0 / 0.18) 64%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--dot-hover-size) at var(--dot-hover-x) var(--dot-hover-y),
+    rgb(0 0 0 / 0.72) 0%,
+    rgb(0 0 0 / 0.46) 34%,
+    rgb(0 0 0 / 0.18) 64%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  opacity: calc(var(--dot-hover-opacity) * 0.72);
+  transition: opacity 180ms ease;
   z-index: -1;
 }

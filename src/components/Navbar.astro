@@ -60,6 +60,38 @@ const { current } = Astro.props;
   const toolbar = document.querySelector<HTMLElement>("[data-toolbar]");
 
   if (toolbar) {
+    if (!document.querySelector(".dot-hover-layer")) {
+      const dotHoverLayer = document.createElement("div");
+      dotHoverLayer.className = "dot-hover-layer";
+      dotHoverLayer.setAttribute("aria-hidden", "true");
+      document.body.prepend(dotHoverLayer);
+    }
+
+    const setDotHoverPosition = (event: PointerEvent) => {
+      document.documentElement.style.setProperty(
+        "--dot-hover-x",
+        `${event.clientX}px`
+      );
+      document.documentElement.style.setProperty(
+        "--dot-hover-y",
+        `${event.clientY}px`
+      );
+      document.documentElement.style.setProperty("--dot-hover-opacity", "1");
+    };
+
+    window.addEventListener("pointermove", setDotHoverPosition, {
+      passive: true,
+    });
+    window.addEventListener("pointerenter", () => {
+      document.documentElement.style.setProperty("--dot-hover-opacity", "1");
+    });
+    window.addEventListener("pointerleave", () => {
+      document.documentElement.style.setProperty("--dot-hover-opacity", "0");
+    });
+    window.addEventListener("blur", () => {
+      document.documentElement.style.setProperty("--dot-hover-opacity", "0");
+    });
+
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
