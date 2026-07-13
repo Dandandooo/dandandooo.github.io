@@ -35,6 +35,16 @@ export const projects: Project[] = [
         // award: "2nd Place"
     },
     {
+        title: "Minecrust",
+        timeframe: "July 2026 - Present",
+        secondaryDate: "Just started",
+        description: "Writing a Minecraft style renderer with a focus on pure performance using WGPU in Rust.",
+        // "href":
+        stack: [ "Rust", "Vulkan", "Wgpu" ],
+        accent: "rose",
+        icon: "catppuccin:rust-alt"
+    },
+    {
         title: "Convolutional Neural Network",
         timeframe: "Mar 2026 - May 2026",
         secondaryDate: "Spring 2026",
@@ -43,6 +53,16 @@ export const projects: Project[] = [
         stack: ["CUDA", "C++"],
         accent: "lime",
         icon: "catppuccin:cuda",
+    },
+    {
+        title: "Finc",
+        timeframe: "July 2026 - Present",
+        secondaryDate: "Not finishing soon",
+        description: "Custom low-level programming language early in development.",
+
+        stack: ["OCaml"],
+        accent: "plum",
+        icon: "catppuccin:ocaml",
     },
     {
         title: "Brainrot TCG",

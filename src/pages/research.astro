@@ -1,9 +1,6 @@
 ---
+import PageShell from "@/layouts/PageShell.astro";
 import ResearchCard from "@/components/ResearchCard.astro";
-import Navbar from "@/components/Navbar.astro";
-import BaseHead from "@/components/BaseHead.astro";
-import "../styles/background-lines.css";
-import "../styles/fonts.css";
 
 const daniel = "https://scholar.google.com/citations?user=IisrrQMAAAAJ&hl=en";
 const dilek = "https://scholar.google.com/citations?hl=en&user=GMcL_9kAAAAJ";
@@ -113,93 +110,25 @@ const papers = [
 ];
 ---
 
-<html lang="en">
-  <BaseHead title="Daniel's Research" favicon="/favicon-p.svg" />
-  <body>
-    <Navbar current="research" />
-
-    <main aria-label="Research">
-      <header>
-        <p class="kicker">Selected Papers and Publications</p>
-        <h1>Research</h1>
-      </header>
-
-      <section class="research-grid" aria-label="Research papers">
-        {papers.map((paper, index) => <ResearchCard {...paper} index={index} />)}
-      </section>
-    </main>
-  </body>
-</html>
+<PageShell
+  theme="research"
+  title="Daniel's Research"
+  description="Publications and research by Daniel Philipov — embodied conversational AI, visual assistants, and machine learning."
+  kicker="Selected Papers and Publications"
+  heading="Research"
+>
+  <section class="research-grid" aria-label="Research papers">
+    {papers.map((paper, index) => <ResearchCard {...paper} index={index} />)}
+  </section>
+</PageShell>
 
 <style>
-  :global(:root) {
-    --page-bg-color: #070a11;
-    --page-base-layer: linear-gradient(
-        180deg,
-        #171025 0%,
-        #110b1a 48%,
-        #09070d 100%
-      );
-    --page-glow-layer-start: radial-gradient(
-      100vw 60vh at 10% -10%,
-      #8f6ad466,
-      transparent 55%
-    );
-    --page-glow-layer-end: radial-gradient(
-      100vw 60vh at 85% -20%,
-      #b48be652,
-      transparent 60%
-    );
-    --dot-pattern-color: rgba(233, 213, 255, 0.28);
-    color: #f8fafc;
-  }
-
-  :global(body) {
-    color: #f8fafc;
-    position: relative;
-    isolation: isolate;
-    font-family: "Lexend", "Segoe UI", sans-serif;
-  }
-
-  :global(:root) {
-    --accent-cyan: #38bdf8;
-    --accent-lime: #a3e635;
-    --accent-amber: #fbbf24;
-    --accent-rose: #fb7185;
-    --accent-plum: #c084fc;
-    --accent-orange: #fb923c;
-  }
-
-  main {
-    width: min(1120px, 92vw);
-    margin: 1.25rem auto 2.5rem;
-  }
-
-  .kicker {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #a5b4fc;
-    font-size: 0.75rem;
-  }
-
-  h1 {
-    margin: 0.15rem 0 1.2rem;
-    font-family: "Rajdhani", sans-serif;
-    letter-spacing: 0.04em;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-  }
-
   .research-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
     align-items: start;
-    padding-bottom: 5rem;
-  }
-
-  .research-grid :global(.info-card) {
-    grid-column: 1 / -1;
+    padding-bottom: 3rem;
   }
 
   .research-grid :global(.info-card:nth-child(odd)) {
@@ -215,10 +144,7 @@ const papers = [
   }
 
   @media (max-width: 640px), (orientation: portrait) {
-    .research-grid :global(.info-card) {
-      transform: none !important;
-    }
-
+    .research-grid :global(.info-card),
     .research-grid :global(.info-card:hover) {
       transform: none !important;
     }

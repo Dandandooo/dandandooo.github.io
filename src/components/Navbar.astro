@@ -23,36 +23,33 @@ const { current } = Astro.props;
   <a
     class:list={["tool-btn", { active: current === "home" }]}
     href="/"
+    data-key="1"
     aria-current={current === "home" ? "page" : undefined}>Home</a
   >
   <a
     class:list={["tool-btn", { active: current === "projects" }]}
     href="/projects"
+    data-key="2"
     aria-current={current === "projects" ? "page" : undefined}
   >
     Projects
   </a>
-  <!-- <a
-    class:list={["tool-btn", { active: current === "projects2" }]}
-    href="/projects_alt"
-    aria-current={current === "projects2" ? "page" : undefined}
-  >
-    Projects Alt
-  </a> -->
   <a
     class:list={["tool-btn", { active: current === "research" }]}
     href="/research"
+    data-key="3"
     aria-current={current === "research" ? "page" : undefined}
   >
     Research
   </a>
   <a
-    class:list={["tool-btn resume-link", { active: false }]}
+    class="tool-btn resume-link"
     href="https://drive.google.com/file/d/1_dAI2V39bt89aqAvf-Q741beMLahxgGs/view?usp=sharing"
     target="_blank"
     rel="noopener noreferrer"
+    data-key="4"
   >
-    Resume
+    Resume<span class="external-mark" aria-hidden="true">↗</span>
   </a>
 </nav>
 
@@ -123,7 +120,7 @@ const { current } = Astro.props;
       toolbar.classList.toggle("is-scrolled", scrollTop > 12);
     };
 
-    // Always start clear on initial paint. Blur appears only after user scrolls.
+    // Always start clear on initial paint. Glass appears only after scrolling.
     toolbar.classList.remove("is-scrolled");
 
     document.scrollingElement?.addEventListener("scroll", setScrolledState, {
@@ -184,45 +181,52 @@ const { current } = Astro.props;
     justify-content: center;
     gap: 0.65rem;
     padding: 0.98rem 1.15rem;
-    border-radius: 0;
-    border: 0 solid transparent;
     background: transparent;
     box-shadow: none;
     backdrop-filter: blur(0px) saturate(100%);
     -webkit-backdrop-filter: blur(0px) saturate(100%);
     z-index: 3;
-    transition: border-color 220ms ease, background-color 220ms ease,
-      box-shadow 220ms ease, backdrop-filter 220ms ease,
-      -webkit-backdrop-filter 220ms ease;
+    transition: background-color 220ms ease, box-shadow 220ms ease,
+      backdrop-filter 220ms ease, -webkit-backdrop-filter 220ms ease;
   }
 
+  /* Gradient hairline along the bottom edge, fading out at the sides. */
   .toolbar::before {
     content: "";
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
     background: linear-gradient(
-      140deg,
-      rgba(255, 255, 255, 0.24),
-      rgba(255, 255, 255, 0.04) 30%,
-      rgba(255, 255, 255, 0.16)
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--page-accent, #f8fafc) 45%, rgba(255, 255, 255, 0.22))
+        18% 82%,
+      transparent
     );
+    opacity: 0;
+    pointer-events: none;
     transition: opacity 220ms ease;
   }
 
+  /* Modern liquid glass: deep blur + saturation, faint accent tint,
+     specular top highlight. */
   .toolbar.is-scrolled {
-    border-bottom: 1px solid #ffffff2b;
-    background: rgba(11, 17, 28, 0.54);
-    box-shadow: 0 8px 22px rgba(7, 11, 18, 0.3),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(22px) saturate(130%);
-    -webkit-backdrop-filter: blur(22px) saturate(130%);
+    background: color-mix(
+      in srgb,
+      var(--page-accent, #38bdf8) 6%,
+      rgba(10, 14, 22, 0.52)
+    );
+    box-shadow:
+      0 14px 36px -18px rgba(0, 0, 0, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
   }
 
   .toolbar.is-scrolled::before {
-    opacity: 0.78;
+    opacity: 1;
   }
 
   :global(body) {
@@ -264,13 +268,55 @@ const { current } = Astro.props;
     opacity: 1;
   }
 
+  .tool-btn:not(.active):hover::after {
+    transform: scaleX(0.55);
+    opacity: 0.55;
+  }
+
   .tool-btn:hover {
     color: #ffffff;
   }
 
   .tool-btn:focus-visible {
-    outline: 2px solid rgba(169, 220, 118, 0.9);
+    outline: 2px solid
+      color-mix(in srgb, var(--page-accent, #f8fafc) 80%, #ffffff);
     outline-offset: 2px;
+  }
+
+  /* Number-key hints, revealed while hovering the toolbar on pointer devices. */
+  .tool-btn::before {
+    content: attr(data-key);
+    position: absolute;
+    top: 0;
+    right: 0.15rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--page-accent, #f8fafc) 70%, #f8fafc);
+    opacity: 0;
+    transform: translateY(2px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .toolbar:hover .tool-btn::before {
+      opacity: 0.65;
+      transform: translateY(0);
+    }
+  }
+
+  .external-mark {
+    display: inline-block;
+    margin-left: 0.28rem;
+    font-size: 0.78em;
+    opacity: 0.7;
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .resume-link:hover .external-mark {
+    transform: translate(2px, -2px);
+    opacity: 1;
   }
 
   .resume-link {
@@ -300,8 +346,16 @@ const { current } = Astro.props;
   }
 
   .name-link:focus-visible {
-    outline: 2px solid rgba(169, 220, 118, 0.9);
+    outline: 2px solid
+      color-mix(in srgb, var(--page-accent, #f8fafc) 80%, #ffffff);
     outline-offset: 2px;
+  }
+
+  /* Hide the name before it can collide with the centered links. */
+  @media (max-width: 980px) {
+    .name-link {
+      display: none;
+    }
   }
 
   @media (max-width: 640px) {
@@ -333,10 +387,6 @@ const { current } = Astro.props;
     .resume-link {
       position: relative;
       right: auto;
-    }
-
-    .name-link {
-      display: none;
     }
   }
 </style>

@@ -12,6 +12,9 @@ const {
   award,
   icon,
   index = 0,
+  clampLines,
+  linkLabel = "View project",
+  tagsLabel = "technologies",
 } = Astro.props;
 
 const normalizedSecondaryDate =
@@ -65,8 +68,21 @@ const hasAward = Boolean(normalizedAward);
       )
     }
   </div>
-  <p>{description}</p>
-  <ul class="stack" aria-label={`${title} technologies`}>
+  {
+    clampLines ? (
+      <div class="desc-wrap">
+        <p class="desc is-clamped" style={`--clamp-lines: ${clampLines}`}>
+          {description}
+        </p>
+        <button class="clamp-toggle" type="button" aria-expanded="false">
+          Read more +
+        </button>
+      </div>
+    ) : (
+      <p class="desc">{description}</p>
+    )
+  }
+  <ul class="stack" aria-label={`${title} ${tagsLabel}`}>
     {
       tags.map((item: string | { label: string; href?: string }) => (
         <li>
@@ -93,7 +109,7 @@ const hasAward = Boolean(normalizedAward);
       <div class="card-footer">
         {href ? (
           <a class="card-link" href={href} target="_blank" rel="noreferrer">
-            View project
+            {linkLabel}
           </a>
         ) : (
           <span />
@@ -108,21 +124,37 @@ const hasAward = Boolean(normalizedAward);
   }
 </article>
 
+<script>
+  document.addEventListener("click", (event) => {
+    const toggle = (event.target as HTMLElement | null)?.closest?.(
+      ".clamp-toggle"
+    );
+    if (!(toggle instanceof HTMLButtonElement)) return;
+    const desc = toggle.closest(".desc-wrap")?.querySelector(".desc");
+    if (!desc) return;
+    const expanded = desc.classList.toggle("is-expanded");
+    toggle.textContent = expanded ? "Show less −" : "Read more +";
+    toggle.setAttribute("aria-expanded", String(expanded));
+  });
+</script>
+
 <style>
   .info-card {
     position: relative;
     display: grid;
     gap: 0.85rem;
     padding: 1.15rem;
-    border-radius: 14px;
-    border: 1px solid color-mix(in srgb, var(--card-accent) 50%, #ffffff14);
+    border-radius: 8px;
+    border: 1px solid
+      color-mix(in srgb, var(--card-accent) 38%, var(--hairline));
     background: radial-gradient(
         120% 120% at 0% 0%,
-        color-mix(in srgb, var(--card-accent) 26%, transparent),
-        transparent 58%
+        color-mix(in srgb, var(--card-accent) 17%, transparent),
+        transparent 55%
       ),
       linear-gradient(180deg, #0d1117f2, #0d1117de);
-    transition: transform 140ms ease, border-color 140ms ease;
+    transition: transform 140ms ease, border-color 140ms ease,
+      box-shadow 200ms ease;
 
     will-change: transform;
     /* Old Safari fallback */
@@ -132,6 +164,26 @@ const hasAward = Boolean(normalizedAward);
     opacity: 0;
     animation: fade-in-card 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(var(--stagger, 0) * 50ms);
+  }
+
+  /* Plus-tick corner marker, graph-paper style */
+  .info-card::after {
+    content: "+";
+    position: absolute;
+    top: 0.35rem;
+    right: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1;
+    color: color-mix(in srgb, var(--card-accent) 70%, #f8fafc);
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+
+  .info-card:hover::after {
+    opacity: 0.85;
+    transform: rotate(90deg);
   }
 
   @keyframes fade-in-card {
@@ -148,6 +200,8 @@ const hasAward = Boolean(normalizedAward);
   .info-card:hover {
     transform: translateY(-3px) rotate(-0.25deg);
     border-color: color-mix(in srgb, var(--card-accent) 78%, #fff5);
+    box-shadow: 0 16px 36px -18px
+      color-mix(in srgb, var(--card-accent) 55%, transparent);
   }
 
   .eyebrow {
@@ -156,13 +210,15 @@ const hasAward = Boolean(normalizedAward);
     position: relative;
     align-items: center;
     justify-content: center;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: color-mix(in srgb, var(--card-accent) 75%, #f8fafc);
-    border: 1px solid #ffffff2a;
-    border-radius: 999px;
-    padding: 0.25rem 0.55rem;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 4px;
+    padding: 0.26rem 0.5rem;
     background: #ffffff0d;
   }
 
@@ -224,7 +280,7 @@ const hasAward = Boolean(normalizedAward);
     opacity: 0.88;
     pointer-events: none;
     flex: 0 0 auto;
-    margin-top: 0.15rem;
+    margin-top: 0.35rem;
   }
 
   .card-icon-image {
@@ -238,15 +294,50 @@ const hasAward = Boolean(normalizedAward);
 
   h2 {
     margin: 0;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
     font-size: clamp(1.06rem, 1vw + 0.78rem, 1.42rem);
     line-height: 1.2;
   }
 
-  p {
+  .desc {
     margin: 0;
     color: #e2e8f0;
     line-height: 1.55;
     font-size: 0.96rem;
+  }
+
+  .desc-wrap {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .desc.is-clamped:not(.is-expanded) {
+    display: -webkit-box;
+    -webkit-line-clamp: var(--clamp-lines, 4);
+    line-clamp: var(--clamp-lines, 4);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .clamp-toggle {
+    width: fit-content;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--card-accent) 80%, #f8fafc);
+  }
+
+  .clamp-toggle:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .stack {
@@ -259,10 +350,14 @@ const hasAward = Boolean(normalizedAward);
   }
 
   .stack li {
-    font-size: 0.76rem;
-    padding: 0.25rem 0.52rem;
-    border: 1px solid #ffffff21;
-    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.64rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.26rem 0.48rem;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
     color: #dbe6f5;
     background: #ffffff0d;
   }
@@ -271,9 +366,9 @@ const hasAward = Boolean(normalizedAward);
     color: inherit;
     text-decoration: none;
     display: block;
-    margin: -0.25rem -0.52rem;
-    padding: 0.25rem 0.52rem;
-    border-radius: 999px;
+    margin: -0.26rem -0.48rem;
+    padding: 0.26rem 0.48rem;
+    border-radius: 4px;
   }
 
   .stack li:has(.tag-link):hover {
@@ -282,18 +377,34 @@ const hasAward = Boolean(normalizedAward);
   }
 
   .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.34rem;
     width: fit-content;
     margin-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: #f8fafc;
     text-decoration: none;
     border-bottom: 1px solid
       color-mix(in srgb, var(--card-accent) 70%, #f8fafc66);
-    font-size: 0.86rem;
-    letter-spacing: 0.01em;
+    padding-bottom: 0.12rem;
+  }
+
+  .card-link::after {
+    content: "→";
+    transition: transform 160ms ease;
   }
 
   .card-link:hover {
     border-bottom-color: color-mix(in srgb, var(--card-accent) 92%, #f8fafc);
+  }
+
+  .card-link:hover::after {
+    transform: translateX(3px);
   }
 
   .card-footer {
@@ -306,48 +417,23 @@ const hasAward = Boolean(normalizedAward);
 
   .award-badge {
     margin-left: auto;
-    font-size: 0.86rem;
-    letter-spacing: 0.04em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.64rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: #f6d457;
     border: 1px solid #ffd84d66;
-    border-radius: 999px;
+    border-radius: 4px;
     background: #ffd84d1a;
-    padding: 0.14rem 0.5rem;
+    padding: 0.2rem 0.45rem;
     white-space: nowrap;
   }
 
-  :global(.project-grid .info-card) {
-    grid-column: span 4;
-  }
-
-  :global(.project-grid .info-card:nth-child(3n + 1)) {
-    transform: translateY(0.35rem) rotate(-0.4deg);
-  }
-
-  :global(.project-grid .info-card:nth-child(3n + 2)) {
-    transform: translateY(1.35rem) rotate(0.45deg);
-  }
-
-  :global(.project-grid .info-card:nth-child(3n)) {
-    transform: translateY(-0.2rem) rotate(-0.2deg);
-  }
-
-  :global(.project-grid .info-card:hover) {
-    transform: translateY(-4px) rotate(-0.25deg);
-  }
-
-  @media (max-width: 1000px) {
-    :global(.project-grid .info-card) {
-      grid-column: span 6;
-    }
-
-    :global(.project-grid .info-card:nth-child(odd)) {
-      transform: translateY(0.45rem);
-    }
-
-    :global(.project-grid .info-card:nth-child(even)) {
-      transform: translateY(0);
-    }
+  .award-badge::before {
+    content: "🏆";
+    margin-right: 0.32rem;
+    font-size: 0.9em;
   }
 
   @media (max-width: 640px) {
@@ -358,15 +444,7 @@ const hasAward = Boolean(normalizedAward);
 
     .info-card:hover {
       transform: none;
-    }
-
-    :global(.project-grid .info-card) {
-      grid-column: auto;
-      transform: none;
-    }
-
-    :global(.project-grid .info-card:hover) {
-      transform: none;
+      box-shadow: none;
     }
   }
 </style>

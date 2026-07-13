@@ -1,100 +1,29 @@
 ---
+import PageShell from "@/layouts/PageShell.astro";
 import Project from "@/components/project.astro";
-import Navbar from "@/components/Navbar.astro";
-import BaseHead from "@/components/BaseHead.astro";
-import "@/styles/background-lines.css";
-import "@/styles/fonts.css";
 
 import { projects } from "@/data/projects.ts";
 ---
 
-<html lang="en">
-  <BaseHead title="Daniel's Projects" favicon="/favicon-g.svg" />
-  <body>
-    <Navbar current="projects" />
-
-    <main>
-      <header>
-        <p class="kicker">Selected builds, research, and experiments</p>
-        <h1>Projects</h1>
-      </header>
-
-      <section class="project-grid" aria-label="Projects">
-        {
-          projects.map((project, index) => (
-            <Project {...project} index={index} />
-          ))
-        }
-      </section>
-    </main>
-  </body>
-</html>
+<PageShell
+  theme="projects"
+  title="Daniel's Projects"
+  description="Selected builds, hackathon wins, and experiments by Daniel Philipov."
+  kicker="Selected builds, research, and experiments"
+  heading="Projects"
+>
+  <section class="project-grid" aria-label="Projects">
+    {projects.map((project, index) => <Project {...project} index={index} />)}
+  </section>
+</PageShell>
 
 <style>
-  :global(:root) {
-    --page-bg-color: #060c09;
-    --page-base-layer: linear-gradient(
-        180deg,
-        #0d1a13 0%,
-        #0a1410 48%,
-        #060c09 100%
-      );
-    --page-glow-layer-start: radial-gradient(
-      100vw 60vh at 10% -10%,
-      #2f8f6940,
-      transparent 55%
-    );
-    --page-glow-layer-end: radial-gradient(
-      100vw 60vh at 85% -20%,
-      #4b9b7240,
-      transparent 60%
-    );
-    --dot-pattern-color: rgba(220, 252, 231, 0.28);
-    color: #f8fafc;
-  }
-
-  :global(body) {
-    color: #f8fafc;
-    position: relative;
-    isolation: isolate;
-    font-family: "Lexend", "Segoe UI", sans-serif;
-  }
-
-  :global(:root) {
-    --accent-cyan: #38bdf8;
-    --accent-lime: #a3e635;
-    --accent-amber: #fbbf24;
-    --accent-rose: #fb7185;
-    --accent-plum: #c084fc;
-    --accent-orange: #fb923c;
-  }
-
-  main {
-    width: min(1120px, 92vw);
-    margin: 1.25rem auto 2.5rem;
-  }
-
-  .kicker {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #86efac;
-    font-size: 0.75rem;
-  }
-
-  h1 {
-    margin: 0.15rem 0 1.2rem;
-    font-family: "Rajdhani", sans-serif;
-    letter-spacing: 0.04em;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-  }
-
   .project-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 1rem;
     align-items: start;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
   }
 
   .project-grid :global(.info-card) {
@@ -134,15 +63,11 @@ import { projects } from "@/data/projects.ts";
   @media (max-width: 640px), (orientation: portrait) {
     .project-grid {
       grid-template-columns: 1fr;
-      gap: 1rem;
     }
 
-    .project-grid :global(.info-card) {
-      grid-column: auto;
-      transform: none !important;
-    }
-
+    .project-grid :global(.info-card),
     .project-grid :global(.info-card:hover) {
+      grid-column: auto;
       transform: none !important;
     }
   }

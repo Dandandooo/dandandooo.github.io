@@ -1,0 +1,57 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
+
+type Theme = "home" | "projects" | "research" | "photography" | "swimming";
+
+interface Props {
+  theme: Theme;
+  title: string;
+  description?: string;
+  kicker?: string;
+  heading?: string;
+  hero?: boolean;
+}
+
+const { theme, title, description, kicker, heading, hero = false } = Astro.props;
+
+const THEME_META: Record<Theme, { favicon: string; themeColor: string }> = {
+  home: { favicon: "/favicon-r.svg", themeColor: "#0f0404" },
+  projects: { favicon: "/favicon-g.svg", themeColor: "#060c09" },
+  research: { favicon: "/favicon-p.svg", themeColor: "#09070d" },
+  photography: { favicon: "/favicon-p.svg", themeColor: "#0c0806" },
+  swimming: { favicon: "/favicon-b.svg", themeColor: "#02050e" },
+};
+
+const { favicon, themeColor } = THEME_META[theme];
+---
+
+<html lang="en" data-theme={theme}>
+  <BaseHead
+    title={title}
+    favicon={favicon}
+    description={description}
+    themeColor={themeColor}
+  />
+  <body>
+    <Navbar current={theme} />
+    <main
+      class:list={["page-main", { "page-main--hero": hero }]}
+      aria-label={heading}
+    >
+      {
+        heading && (
+          <header class="page-header">
+            {kicker && <p class="kicker">{kicker}</p>}
+            <h1 class="page-title">
+              {heading}
+            </h1>
+          </header>
+        )
+      }
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

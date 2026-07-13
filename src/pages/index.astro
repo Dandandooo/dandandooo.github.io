@@ -1,10 +1,9 @@
 ---
-import "@/styles/background-lines.css";
-import "@/styles/fonts.css";
-import Navbar from "@/components/Navbar.astro";
-import BaseHead from "@/components/BaseHead.astro";
+import PageShell from "@/layouts/PageShell.astro";
 
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import photo from "@/assets/images/rh_rooftop.jpeg";
 
 // https://icon-sets.iconify.design/catppuccin/page-2.html
 const tech_stack: string[] = [
@@ -29,156 +28,64 @@ const tech_stack: string[] = [
 	"catppuccin:nix",
 	"catppuccin:macos",
 ];
-
-import photo from "@/assets/images/profile.jpeg";
-import { Image } from "astro:assets";
 ---
 
-<html lang="en" class="home-page">
-	<BaseHead title="Daniel Philipov" favicon="/favicon-r.svg" />
-	<body class="home-page">
-		<Navbar current="home" />
-		<main>
-			<header>
-				<p class="kicker">Student, Researcher, Athlete</p>
-				<h1>Daniel Philipov</h1>
-			</header>
-			<section class="profile-grid" aria-label="Profile layout">
-				<div class="photo-frame" aria-label="Photo frame placeholder">
-					<Image
-						src={photo}
-						alt="Daniel Philipov"
-						class="profile-photo"
-						loading="eager"
-						fetchpriority="high"
-					/>
-				</div>
-				<article class="bio-box">
-					<h3>About Me</h3>
-					<p>
-						Hi, my name is Daniel Philipov! I am a Junior at UIUC
-						studying Computer Science and Physics, and minoring in
-						Astronomy.
-					</p>
-					<p>
-						My hobbies include coding, competitive swimming, skiing,
-						soccer, and playing video games with my friends and
-						family.
-					</p>
-					<p>
-						When it comes to coding, I'm driven by the beauty of
-						code. I strive to achieve neatness, simplicity, and
-						performance in everything I make, whether it be an AI
-						algorithm, platformer game, or even this website.
-					</p>
-					<p>
-						You can find me this summer at Google Sunnyvale, working
-						on overhauling the GMail spam detection engine.
-					</p>
-					<h3>My Tech Stack</h3>
-					{
-						tech_stack.map((icon_name, _) => (
-							<Icon
-								name={icon_name}
-								height="20pt"
-								width="23pt"
-								title={icon_name.split(":")[1]}
-							/>
-						))
-					}
-				</article>
-			</section>
-		</main>
-	</body>
-</html>
+<PageShell
+	theme="home"
+	title="Daniel Philipov"
+	description="Daniel Philipov — CS & Physics student at UIUC. Projects, research, swimming, and more."
+	kicker="Student, Researcher, Athlete"
+	heading="Daniel Philipov"
+	hero
+>
+	<section class="profile-grid" aria-label="Profile layout">
+		<div class="photo-frame">
+			<Image
+				src={photo}
+				alt="Daniel Philipov"
+				class="profile-photo"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
+		<article class="bio-box">
+			<h3>About Me</h3>
+			<p>
+				Hi, my name is Daniel Philipov! I am a Junior at UIUC studying
+				Computer Science and Physics, and minoring in Astronomy.
+			</p>
+			<p>
+				My hobbies include coding, competitive swimming, skiing,
+				soccer, and playing video games with my friends and family.
+			</p>
+			<p>
+				When it comes to coding, I'm driven by the beauty of code. I
+				strive to achieve neatness, simplicity, and performance in
+				everything I make, whether it be an AI algorithm, platformer
+				game, or even this website.
+			</p>
+			<p>
+				You can find me this summer at Google Sunnyvale, working on
+				overhauling the Google Drive spam detection engine.
+			</p>
+			<h3>My Tech Stack</h3>
+			<div class="tech-stack">
+				{
+					tech_stack.map((icon_name) => (
+						<Icon
+							name={icon_name}
+							height="20pt"
+							width="23pt"
+							title={icon_name.split(":")[1]}
+						/>
+					))
+				}
+			</div>
+		</article>
+	</section>
+</PageShell>
 
 <style>
-	:global(:root) {
-		--page-bg-color: #0f0404;
-		--page-base-layer: linear-gradient(
-				180deg,
-				#350c0c 0%,
-				#220707 48%,
-				#0f0404 100%
-			);
-		--page-glow-layer-start: radial-gradient(
-			100vw 60vh at 10% -10%,
-			#fb718550,
-			transparent 55%
-		);
-		--page-glow-layer-end: radial-gradient(
-			100vw 60vh at 85% -20%,
-			#ef444440,
-			transparent 60%
-		);
-		--line-pattern-color: rgba(255, 235, 210, 0.16);
-		--dot-pattern-color: rgba(255, 235, 210, 0.3);
-		margin: 0;
-		height: 100%;
-		overflow: hidden;
-		color: #f8fafc;
-	}
-
-	:global(body) {
-		margin: 0;
-		height: 100vh;
-		overflow: hidden;
-		color: #f8fafc;
-		position: relative;
-		isolation: isolate;
-		font-family: "Lexend", "Segoe UI", sans-serif;
-	}
-
-	:global(body::after) {
-		content: "";
-		position: fixed;
-		inset: 0;
-		pointer-events: none;
-		background: rgba(7, 10, 17, 0.28);
-		z-index: -1;
-	}
-
-	main {
-		width: min(1120px, 92vw);
-		height: calc(100vh - 5.5rem);
-		margin: 1.25rem auto 2.5rem;
-		display: grid;
-		align-content: center;
-		gap: 1rem;
-	}
-
-	.kicker {
-		margin: 0;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: #fb7185;
-		font-size: 0.75rem;
-	}
-
-	h1 {
-		font-family: "Rajdhani", sans-serif;
-		font-size: clamp(2.35rem, 6vw, 4.6rem);
-		letter-spacing: 0.04em;
-		margin: 0;
-		color: #f8fafc;
-	}
-
-	@keyframes index-fade-in {
-		0% {
-			opacity: 0;
-			transform: translateY(12px);
-		}
-		100% {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	header {
-		opacity: 0;
-		animation: index-fade-in 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	}
-
 	.profile-grid {
 		display: grid;
 		grid-template-columns: minmax(220px, 38%) minmax(260px, 1fr);
@@ -186,32 +93,27 @@ import { Image } from "astro:assets";
 		align-items: stretch;
 	}
 
-	.photo-frame,
-	.bio-box {
-		border: 1px solid #ffffff26;
-		border-radius: 16px;
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
-	}
-
 	.photo-frame {
-		background: #090d16bd;
-		min-height: clamp(300px, 46vh, 520px);
 		position: relative;
+		min-height: clamp(300px, 44vh, 520px);
+		border: 1px solid var(--hairline);
+		border-radius: 8px;
+		background: #090d16bd;
 		box-shadow: inset 0 0 0 1px rgba(252, 252, 250, 0.12);
 		overflow: hidden;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 		opacity: 0;
-		animation: index-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-		animation-delay: 0.25s;
+		animation: rise-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
 	}
 
-	:global(.photo-frame picture) {
+	.photo-frame :global(picture) {
 		position: absolute;
 		inset: 0;
 		display: block;
 	}
 
-	:global(.photo-frame img.profile-photo) {
+	.photo-frame :global(img.profile-photo) {
 		position: absolute;
 		inset: 0;
 		width: 100%;
@@ -221,34 +123,27 @@ import { Image } from "astro:assets";
 		object-position: center center;
 	}
 
-	.photo-frame span {
-		letter-spacing: 0.05em;
-		color: #e2e8f0cc;
-	}
-
 	.bio-box {
 		position: relative;
+		border: 1px solid rgba(251, 113, 133, 0.32);
+		border-radius: 8px;
 		background: radial-gradient(
 				120% 120% at 0% 0%,
-				rgba(251, 113, 133, 0.22),
-				transparent 58%
+				rgba(251, 113, 133, 0.18),
+				transparent 55%
 			),
 			linear-gradient(
 				180deg,
 				rgba(21, 8, 12, 0.95),
 				rgba(21, 8, 12, 0.87)
 			);
-		border: 1px solid rgba(251, 113, 133, 0.32);
 		box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
 		overflow: hidden;
-		font-family: "Lexend", "Segoe UI", sans-serif;
 		font-size: clamp(1.03rem, 1.45vw, 1.16rem);
 		line-height: 1.6;
-		color: #f8fafc;
 		padding: clamp(1rem, 2vw, 1.35rem);
 		opacity: 0;
-		animation: index-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-		animation-delay: 0.5s;
+		animation: rise-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 	}
 
 	.bio-box::before {
@@ -261,12 +156,33 @@ import { Image } from "astro:assets";
 		mask: linear-gradient(#000, transparent 30%);
 	}
 
+	.bio-box::after {
+		content: "+";
+		position: absolute;
+		top: 0.4rem;
+		right: 0.6rem;
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		line-height: 1;
+		color: #fda4af;
+		opacity: 0.4;
+		pointer-events: none;
+	}
+
 	.bio-box h3 {
 		margin: 0 0 0.75rem;
-		font-family: "Rajdhani", sans-serif;
-		font-size: 1.15rem;
-		letter-spacing: 0.04em;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		font-size: 0.7rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 		color: #fda4af;
+	}
+
+	.bio-box h3::before {
+		content: "//";
+		margin-right: 0.5rem;
+		opacity: 0.55;
 	}
 
 	.bio-box p {
@@ -274,39 +190,26 @@ import { Image } from "astro:assets";
 		color: #e7dbe1;
 	}
 
-	.bio-box p:last-child {
-		margin-bottom: 0;
+	.bio-box p:last-of-type {
+		margin-bottom: 1.1rem;
+	}
+
+	.tech-stack {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem 0.5rem;
+		align-items: center;
+	}
+
+	.tech-stack :global(svg) {
+		transition: transform 160ms ease;
+	}
+
+	.tech-stack :global(svg:hover) {
+		transform: translateY(-3px) scale(1.12);
 	}
 
 	@media (max-width: 840px) {
-		:global(html.home-page) {
-			height: auto;
-			min-height: 100%;
-			overflow-x: hidden !important;
-			overflow-y: auto !important;
-			overscroll-behavior-y: auto;
-		}
-
-		:global(body.home-page) {
-			padding-top: 0 !important;
-			height: auto !important;
-			min-height: 100vh;
-			min-height: 100svh;
-			overflow-x: hidden !important;
-			overflow-y: auto !important;
-			-webkit-overflow-scrolling: touch;
-			overscroll-behavior-y: auto;
-		}
-
-		main {
-			box-sizing: border-box;
-			padding-top: 5.25rem;
-			height: auto;
-			min-height: calc(100vh - 5.5rem);
-			min-height: calc(100svh - 5.5rem);
-			align-content: start;
-		}
-
 		.profile-grid {
 			grid-template-columns: 1fr;
 		}

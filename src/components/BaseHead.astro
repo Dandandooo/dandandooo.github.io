@@ -1,10 +1,22 @@
 ---
+import "@/styles/background-lines.css";
+import "@/styles/fonts.css";
+import "@/styles/global.css";
+import "@/styles/themes.css";
+
 interface Props {
 	title: string;
 	favicon: string;
+	description?: string;
+	themeColor?: string;
 }
 
-const { title, favicon } = Astro.props;
+const {
+	title,
+	favicon,
+	description = "Daniel Philipov — CS & Physics student at UIUC. Projects, research, swimming, and more.",
+	themeColor = "#070a11",
+} = Astro.props;
 ---
 
 <head>
@@ -12,6 +24,11 @@ const { title, favicon } = Astro.props;
 	<link rel="icon" type="image/svg+xml" href={favicon} />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="generator" content={Astro.generator} />
+	<meta name="description" content={description} />
+	<meta name="theme-color" content={themeColor} />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:type" content="website" />
 	<title>{title}</title>
 
 	<!-- Preload custom fonts to eliminate FOUT/FOIT -->

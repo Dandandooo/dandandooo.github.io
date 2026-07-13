@@ -1,0 +1,191 @@
+/* Shared design tokens and base styles for every page. */
+:root {
+  /* Card accent palette */
+  --accent-cyan: #38bdf8;
+  --accent-lime: #a3e635;
+  --accent-amber: #fbbf24;
+  --accent-rose: #fb7185;
+  --accent-plum: #c084fc;
+  --accent-orange: #fb923c;
+
+  /* Per-page theme color; pages override this. */
+  --page-accent: #38bdf8;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
+  --font-display: "Rajdhani", sans-serif;
+  --font-body: "Lexend", "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Hairline borders, hex.tech graph-paper style */
+  --hairline: rgba(248, 250, 252, 0.14);
+  --hairline-strong: rgba(248, 250, 252, 0.24);
+
+  color: var(--text-primary);
+}
+
+body {
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  position: relative;
+  isolation: isolate;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--page-accent) 35%, #ffffff26)
+    transparent;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--page-accent) 45%, transparent);
+  color: #ffffff;
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--page-accent) 75%, #ffffff);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Shared page scaffolding */
+.page-main {
+  width: min(1120px, 92vw);
+  margin: 1.25rem auto 2.5rem;
+}
+
+/* Hero variant: vertically centered, fills the viewport minus nav and footer. */
+.page-main--hero {
+  min-height: calc(100svh - 12rem);
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+}
+
+.page-main--hero .page-title {
+  font-size: clamp(2.35rem, 6vw, 4.6rem);
+}
+
+.page-header {
+  opacity: 0;
+  animation: rise-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.kicker {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: color-mix(in srgb, var(--page-accent) 78%, #f8fafc);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.68rem;
+}
+
+.kicker::before {
+  content: "//";
+  margin-right: 0.55rem;
+  opacity: 0.55;
+}
+
+.page-title {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--text-primary);
+}
+
+/* Hairline rule under page headers, with plus-tick end markers. */
+.page-header::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin: 0.9rem 0 1.4rem;
+  background: linear-gradient(
+    90deg,
+    var(--hairline-strong),
+    var(--hairline) 55%,
+    transparent
+  );
+}
+
+.plus-tick {
+  font-family: var(--font-mono);
+  color: color-mix(in srgb, var(--page-accent) 65%, #f8fafc);
+  opacity: 0.6;
+  user-select: none;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Footer */
+.site-footer {
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+  padding: 1rem 0 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text-secondary) 62%, transparent);
+  border-top: 1px solid var(--hairline);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer .footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  color: color-mix(in srgb, var(--text-secondary) 78%, transparent);
+  text-decoration: none;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.site-footer a:hover {
+  color: color-mix(in srgb, var(--page-accent) 70%, #f8fafc);
+  transform: translateY(-1px);
+}
+
+.site-footer .footer-dot {
+  opacity: 0.45;
+}
+
+.site-footer svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+}
+
+/* Respect users who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

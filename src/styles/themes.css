@@ -1,0 +1,123 @@
+/* Per-page color themes. PageShell sets data-theme on <html>. */
+
+html[data-theme="home"] {
+  --page-accent: #fb7185;
+  --page-bg-color: #0f0404;
+  --page-base-layer: linear-gradient(
+    180deg,
+    #350c0c 0%,
+    #220707 48%,
+    #0f0404 100%
+  );
+  --page-glow-layer-start: radial-gradient(
+    100vw 60vh at 10% -10%,
+    #fb718550,
+    transparent 55%
+  );
+  --page-glow-layer-end: radial-gradient(
+    100vw 60vh at 85% -20%,
+    #ef444440,
+    transparent 60%
+  );
+  --line-pattern-color: rgba(255, 235, 210, 0.16);
+  --dot-pattern-color: rgba(255, 235, 210, 0.3);
+}
+
+html[data-theme="home"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(7, 10, 17, 0.28);
+  z-index: -1;
+}
+
+html[data-theme="projects"] {
+  --page-accent: #86efac;
+  --page-bg-color: #060c09;
+  --page-base-layer: linear-gradient(
+    180deg,
+    #0d1a13 0%,
+    #0a1410 48%,
+    #060c09 100%
+  );
+  --page-glow-layer-start: radial-gradient(
+    100vw 60vh at 10% -10%,
+    #2f8f6940,
+    transparent 55%
+  );
+  --page-glow-layer-end: radial-gradient(
+    100vw 60vh at 85% -20%,
+    #4b9b7240,
+    transparent 60%
+  );
+  --dot-pattern-color: rgba(220, 252, 231, 0.28);
+}
+
+html[data-theme="research"] {
+  --page-accent: #c084fc;
+  --page-bg-color: #070a11;
+  --page-base-layer: linear-gradient(
+    180deg,
+    #171025 0%,
+    #110b1a 48%,
+    #09070d 100%
+  );
+  --page-glow-layer-start: radial-gradient(
+    100vw 60vh at 10% -10%,
+    #8f6ad466,
+    transparent 55%
+  );
+  --page-glow-layer-end: radial-gradient(
+    100vw 60vh at 85% -20%,
+    #b48be652,
+    transparent 60%
+  );
+  --dot-pattern-color: rgba(233, 213, 255, 0.28);
+}
+
+html[data-theme="photography"] {
+  --page-accent: #c6ab92;
+  --page-bg-color: #0c0806;
+  --page-base-layer: linear-gradient(
+    180deg,
+    #241812 0%,
+    #31211a 46%,
+    #15100c 100%
+  );
+  --page-glow-layer-start: radial-gradient(
+    100vw 60vh at 10% -10%,
+    #86634f40,
+    transparent 55%
+  );
+  --page-glow-layer-end: radial-gradient(
+    100vw 60vh at 85% -20%,
+    #98705a38,
+    transparent 60%
+  );
+  --line-pattern-color: rgba(227, 205, 180, 0.1);
+  --dot-pattern-color: rgba(227, 205, 180, 0.26);
+}
+
+html[data-theme="swimming"] {
+  --page-accent: #7dd3fc;
+  --page-bg-color: #02050e;
+  --page-base-layer: linear-gradient(
+    180deg,
+    #091c3c 0%,
+    #05122a 46%,
+    #02050e 100%
+  );
+  --page-glow-layer-start: radial-gradient(
+    100vw 60vh at 10% -10%,
+    #74a6d326,
+    transparent 55%
+  );
+  --page-glow-layer-end: radial-gradient(
+    100vw 60vh at 85% -20%,
+    #7fb8d81f,
+    transparent 60%
+  );
+  --line-pattern-color: rgba(186, 228, 255, 0.16);
+  --dot-pattern-color: rgba(186, 228, 255, 0.28);
+}

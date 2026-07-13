@@ -1,7 +1,5 @@
 ---
-import "../styles/background-lines.css";
-import "../styles/fonts.css";
-import Navbar from "@/components/Navbar.astro";
+import PageShell from "@/layouts/PageShell.astro";
 import PhotoTile from "@/components/PhotoTile.astro";
 
 type PhotoTileData = {
@@ -36,108 +34,29 @@ const photoTiles: PhotoTileData[] = [
 ];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-p.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Daniel's Photography</title>
-  </head>
-  <body>
-    <Navbar current="photography" />
-
-    <main aria-label="Photography">
-      <header>
-        <p class="kicker">Frames, light, and stories through the lens</p>
-        <h1>Photography</h1>
-      </header>
-      <section class="photo-grid" aria-label="Photography grid">
-        {
-          photoTiles.map((tile, index) => (
-            <PhotoTile
-              title={tile.title}
-              size={tile.size}
-              index={index + 1}
-              image={tile.image}
-              imageAlt={tile.title}
-            />
-          ))
-        }
-      </section>
-    </main>
-  </body>
-</html>
+<PageShell
+  theme="photography"
+  title="Daniel's Photography"
+  description="Photography by Daniel Philipov — frames, light, and stories through the lens."
+  kicker="Frames, light, and stories through the lens"
+  heading="Photography"
+>
+  <section class="photo-grid" aria-label="Photography grid">
+    {
+      photoTiles.map((tile, index) => (
+        <PhotoTile
+          title={tile.title}
+          size={tile.size}
+          index={index + 1}
+          image={tile.image}
+          imageAlt={tile.title}
+        />
+      ))
+    }
+  </section>
+</PageShell>
 
 <style>
-  :global(:root) {
-    --page-bg-color: #0c0806;
-    --page-base-layer: linear-gradient(
-        180deg,
-        #241812 0%,
-        #31211a 46%,
-        #15100c 100%
-      );
-    --page-glow-layer-start: radial-gradient(
-      100vw 60vh at 10% -10%,
-      #86634f40,
-      transparent 55%
-    );
-    --page-glow-layer-end: radial-gradient(
-      100vw 60vh at 85% -20%,
-      #98705a38,
-      transparent 60%
-    );
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    color: #f8fafc;
-  }
-
-  :global(body) {
-    margin: 0;
-    height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
-    color: #f8fafc;
-    position: relative;
-    isolation: isolate;
-    font-family: "Lexend", "Segoe UI", sans-serif;
-  }
-
-  :global(:root) {
-    --accent-cyan: #6a4d3f;
-    --accent-lime: #b1967a;
-    --accent-amber: #9a775d;
-    --accent-rose: #8a6550;
-    --accent-plum: #7a5c49;
-    --accent-orange: #bf9978;
-    --line-pattern-color: rgba(227, 205, 180, 0.1);
-    --dot-pattern-color: rgba(227, 205, 180, 0.26);
-  }
-
-  main {
-    width: min(1120px, 92vw);
-    margin: 1.25rem auto 2.5rem;
-  }
-
-  .kicker {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #c6ab92;
-    font-size: 0.75rem;
-  }
-
-  h1 {
-    margin: 0.15rem 0 1.2rem;
-    font-family: "Rajdhani", sans-serif;
-    letter-spacing: 0.04em;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-  }
-
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));

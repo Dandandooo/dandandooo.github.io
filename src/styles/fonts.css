@@ -9,3 +9,10 @@
   src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
   font-display: block;
 }
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("/fonts/SpaceMono-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
