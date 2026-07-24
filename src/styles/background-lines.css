@@ -38,9 +38,7 @@
 
 html {
   background-color: var(--page-bg-color);
-  height: 100%;
   margin: 0;
-  overflow: hidden;
   overscroll-behavior: none;
 }
 
@@ -49,9 +47,9 @@ body {
   background-image: var(--page-background-layers, var(--page-background));
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  background-attachment: fixed;
+  min-height: 100vh;
   margin: 0;
-  overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
