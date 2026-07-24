@@ -18,57 +18,39 @@ import { projects } from "@/data/projects.ts";
 </PageShell>
 
 <style>
+  /*
+   * Native CSS masonry via grid lanes: items pack vertically into the
+   * column with the most room instead of aligning to a shared row
+   * baseline. `display: grid` is the fallback — browsers that don't
+   * recognize `grid-lanes` keep it and render a regular equal-row grid.
+   * Ships unflagged in Safari 26.4; behind a flag elsewhere for now.
+   */
   .project-grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    display: grid-lanes;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     align-items: start;
     padding-bottom: 3rem;
   }
 
   .project-grid :global(.info-card) {
-    grid-column: span 4;
-  }
-
-  .project-grid :global(.info-card:nth-child(3n + 1)) {
-    transform: translateY(0.4rem) rotate(-0.35deg);
-  }
-
-  .project-grid :global(.info-card:nth-child(3n + 2)) {
-    transform: translateY(0.95rem) rotate(0.3deg);
-  }
-
-  .project-grid :global(.info-card:nth-child(3n)) {
-    transform: translateY(0.8rem) rotate(-0.25deg);
+    transition: transform 0.2s ease;
   }
 
   .project-grid :global(.info-card:hover) {
-    transform: translateY(-4px) rotate(-0.2deg);
+    transform: translateY(-4px);
   }
 
   @media (max-width: 1000px) {
-    .project-grid :global(.info-card) {
-      grid-column: span 6;
-    }
-
-    .project-grid :global(.info-card:nth-child(odd)) {
-      transform: translateY(0.4rem);
-    }
-
-    .project-grid :global(.info-card:nth-child(even)) {
-      transform: translateY(0);
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (max-width: 640px), (orientation: portrait) {
     .project-grid {
       grid-template-columns: 1fr;
-    }
-
-    .project-grid :global(.info-card),
-    .project-grid :global(.info-card:hover) {
-      grid-column: auto;
-      transform: none !important;
     }
   }
 </style>
