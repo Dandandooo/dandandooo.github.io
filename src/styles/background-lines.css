@@ -49,7 +49,6 @@ body {
   background-image: var(--page-background-layers, var(--page-background));
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: fixed;
   height: 100vh;
   margin: 0;
   overflow-y: auto;
@@ -63,9 +62,17 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: var(--page-pattern-layers);
-  background-size: var(--page-pattern-sizes);
-  mix-blend-mode: soft-light;
+  /* Pattern layers sit on top of a private copy of the page's green base and
+     are blended into it with background-blend-mode (resolved within this one
+     element's paint — no external backdrop for Safari to mis-resolve, unlike
+     mix-blend-mode). Compositing the whole thing over the body's identical
+     green at 0.46 opacity reproduces the old soft-light + opacity result. */
+  background-color: var(--page-bg-color);
+  background-image: var(--page-pattern-layers), var(--page-background-layers);
+  background-repeat: repeat, repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-size: var(--page-pattern-sizes), cover, cover, cover;
+  background-blend-mode: soft-light, soft-light, soft-light, normal, normal,
+    normal;
   opacity: var(--page-pattern-opacity);
   z-index: -1;
 }
